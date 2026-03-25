@@ -20,7 +20,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pdftool
+          name: pdftool-win
           path: dist/pdftool.exe
 
   build-macos:
@@ -44,5 +44,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pdftool
+          name: pdftool-mac
           path: dist/pdftool.zip
