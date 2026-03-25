@@ -10,7 +10,7 @@ from tkinter import filedialog, messagebox, ttk
 from pathlib import Path
 
 
-# PDF 处理库
+# PDF 
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
