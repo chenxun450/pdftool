@@ -1,0 +1,49 @@
+name: Build PDF Watermark Tool
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install pyinstaller PyPDF2 reportlab pikepdf
+      - name: Build with PyInstaller
+        run: pyinstaller --onefile --windowed --add-data "simhei.ttf;." pdf_watermark_gui.py
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: pdf-watermark-win
+          path: dist/pdf_watermark_gui.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install pyinstaller PyPDF2 reportlab pikepdf
+      - name: Build with PyInstaller
+        run: pyinstaller --onefile --windowed --add-data "simhei.ttf:." pdf_watermark_gui.py
+      - name: Create DMG (optional)
+        run: |
+          # 可以使用 create-dmg 等工具将 .app 打包成 DMG
+          # 这里仅做演示，直接上传 .app
+          cd dist
+          zip -r pdf-watermark-macos.zip pdf_watermark_gui.app
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: pdf-watermark-mac
+          path: dist/pdf-watermark-macos.zip
